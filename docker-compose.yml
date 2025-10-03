@@ -13,9 +13,11 @@ services:
       - LOG_LEVEL=${LOG_LEVEL:-INFO}
       - MAX_SEARCH_RESULTS=${MAX_SEARCH_RESULTS:-10}
       - RATING_FILTER=${RATING_FILTER:-safe}
+      - USER_DATA_DIR=/app/user_data
     volumes:
       - ./data:/app/data
       - ./logs:/app/logs
+      - ./user_data:/app/user_data
     depends_on:
       redis:
         condition: service_healthy

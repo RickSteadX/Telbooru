@@ -17,6 +17,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Set work directory
 WORKDIR /app
 
+# Create directories and set permissions
+RUN mkdir -p /app/data /app/logs /app/user_data && \
+    useradd --create-home --shell /bin/bash app && \
+    chown -R app:app /app
+
 # Copy requirements first for better caching
 COPY requirements.txt .
 
@@ -24,22 +29,16 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
-COPY . .
-
-# Create non-root user
-RUN useradd --create-home --shell /bin/bash app && \
-    chown -R app:app /app
+COPY --chown=app:app . .
 
 # Production stage
 FROM base as production
 USER app
-EXPOSE 8080
 ENTRYPOINT ["./docker-entrypoint.sh"]
 CMD ["python", "main.py"]
 
 # Development stage
 FROM base as development
 USER app
-EXPOSE 8080
 ENTRYPOINT ["./docker-entrypoint.sh"]
 CMD ["python", "main.py"]

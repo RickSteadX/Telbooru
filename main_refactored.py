@@ -109,7 +109,7 @@ class TelbooruBot:
         self.application = None
         
         # Initialize repositories
-        self.user_repository = UserRepository(data_dir="user_data")
+        self.user_repository = UserRepository(data_dir=os.getenv("USER_DATA_DIR", "user_data"))
         self.search_repository = SearchRepository()
         
         # Initialize services
