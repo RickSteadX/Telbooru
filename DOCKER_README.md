@@ -1,6 +1,6 @@
-# Docker Configuration for Telbooru Discord Bot
+# Docker Configuration for Telbooru Telegram Bot
 
-This directory contains Docker configuration for running the Telbooru Discord bot in containerized environments.
+This directory contains Docker configuration for running the Telbooru Telegram bot in containerized environments.
 
 ## Quick Start
 
@@ -10,7 +10,7 @@ This directory contains Docker configuration for running the Telbooru Discord bo
 # Copy environment template
 cp .env.example .env
 
-# Edit .env file with your Discord token
+# Edit .env file with your Telegram bot token
 nano .env
 ```
 
@@ -43,7 +43,7 @@ docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d
 ## Services
 
 ### telbooru-bot
-- **Description**: Main Discord bot service
+- **Description**: Main Telegram bot service
 - **Image**: Custom Python 3.11 image
 - **Environment**: Uses `.env` file
 - **Volumes**: 
@@ -63,7 +63,7 @@ docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `DISCORD_TOKEN` | Your Discord bot token | **Required** |
+| `TELEGRAM_BOT_TOKEN` | Your Telegram bot token | **Required** |
 | `BOORU_API_KEY` | Optional Booru API key | - |
 | `LOG_LEVEL` | Logging level | `INFO` |
 | `MAX_SEARCH_RESULTS` | Max images per search | `10` |
@@ -160,6 +160,15 @@ docker-compose down
    ```bash
    # Check Redis status
    docker-compose exec redis redis-cli ping
+   ```
+
+4. **Telegram Bot Not Responding**
+   ```bash
+   # Check bot logs
+   docker-compose logs -f telbooru-bot
+   
+   # Verify token is set
+   docker-compose exec telbooru-bot env | grep TELEGRAM
    ```
 
 ### Debug Mode
