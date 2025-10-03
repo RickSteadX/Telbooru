@@ -1,4 +1,4 @@
-# Telbooru Discord Bot Dockerfile
+# Telbooru Telegram Bot Dockerfile
 FROM python:3.11-slim as base
 
 # Set environment variables
@@ -33,11 +33,13 @@ RUN useradd --create-home --shell /bin/bash app && \
 # Production stage
 FROM base as production
 USER app
+EXPOSE 8080
 ENTRYPOINT ["./docker-entrypoint.sh"]
-CMD ["python", "main_refactored.py"]
+CMD ["python", "main.py"]
 
 # Development stage
 FROM base as development
 USER app
+EXPOSE 8080
 ENTRYPOINT ["./docker-entrypoint.sh"]
-CMD ["python", "main_refactored.py"]
+CMD ["python", "main.py"]
