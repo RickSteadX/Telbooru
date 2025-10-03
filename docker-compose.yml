@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  telbooru-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: telbooru-bot
+    restart: unless-stopped
+    environment:
+      - DISCORD_TOKEN=${DISCORD_TOKEN}
+      - BOORU_API_KEY=${BOORU_API_KEY:-}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - MAX_SEARCH_RESULTS=${MAX_SEARCH_RESULTS:-10}
+      - RATING_FILTER=${RATING_FILTER:-safe}
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    depends_on:
+      - redis
+    networks:
+      - telbooru-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: telbooru-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    networks:
+      - telbooru-network
+
+networks:
+  telbooru-network:
+    driver: bridge
+
+volumes:
+  redis_data:

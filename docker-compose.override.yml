@@ -1,0 +1,16 @@
+# Local development overrides
+version: '3.8'
+
+services:
+  telbooru-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    volumes:
+      - .:/app  # Mount source code for live reload
+      - ./data:/app/data
+      - ./logs:/app/logs
+    environment:
+      - LOG_LEVEL=DEBUG
+    command: python main_refactored.py
