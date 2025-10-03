@@ -1,6 +1,5 @@
-# Discord Bot
-discord.py>=2.3.0
-discord-py-interactions>=5.10.0
+# Telegram Bot
+python-telegram-bot>=20.0
 
 # HTTP Client
 aiohttp>=3.8.0

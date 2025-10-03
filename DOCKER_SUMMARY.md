@@ -17,7 +17,7 @@
 ### Services Configured
 
 #### Core Services
-- **telbooru-bot**: Main Discord bot service
+- **telbooru-bot**: Main Telegram bot service
 - **redis**: In-memory cache and session storage
 
 ### Features
@@ -65,7 +65,7 @@ make status       # Check service status
 1. **Setup Environment**
    ```bash
    cp .env.example .env
-   # Edit .env with your Discord token
+   # Edit .env with your Telegram bot token
    ```
 
 2. **Development**
